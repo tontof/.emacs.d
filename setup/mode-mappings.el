@@ -49,6 +49,7 @@ if you change this variable."
            indent-tabs-mode)))
 
 ;; SGML
+(add-to-list 'auto-mode-alist '("\\.tpl.php[345]?" . sgml-mode))
 (eval-after-load "sgml-mode"
   '(progn
      ((lambda ()
