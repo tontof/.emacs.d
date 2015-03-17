@@ -43,10 +43,15 @@ if you change this variable."
 (add-to-list 'auto-mode-alist '("\\.php[345]?" . php-mode))
 (eval-after-load "php-mode"
   '(progn
-     (setq tab-width 4
-           c-basic-offset 4
-           c-hanging-comment-ender-p nil
-           indent-tabs-mode)))
+     ((lambda ()
+        (require 'multi-web-mode)
+        (define-key php-mode-map (kbd "C-c /") 'comment-or-uncomment-region)
+        (setq mweb-default-major-mode 'html-mode)
+        (setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
+                          (js-mode "<script +\\(type=\"text/javascript\"\\|language=\"javascript\"\\)[^>]*>" "</script>")
+                          (css-mode "<style +type=\"text/css\"[^>]*>" "</style>")))
+        (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
+        (multi-web-global-mode 1)))))
 
 ;; SGML
 (add-to-list 'auto-mode-alist '("\\.tpl.php[345]?" . sgml-mode))
@@ -66,5 +71,13 @@ if you change this variable."
 ;; JAVASCRIPT
 (autoload 'js3-mode "js3" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js3-mode))
+
+;; ORG
+(eval-after-load "org"
+  '(progn
+     ((lambda ()
+        (require 'ox-reveal)
+        (require 'htmlize)
+        (setq org-html-htmlize-output-type 'css)))))
 
 (provide 'mode-mappings)
