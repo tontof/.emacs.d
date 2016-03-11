@@ -43,9 +43,15 @@
 
 ;; set/load some paths 
 (setq site-lisp-dir (expand-file-name "site-lisp" user-emacs-directory))
-(setq setup-dir (expand-file-name "setup" user-emacs-directory))  
+(setq setup-dir (expand-file-name "setup" user-emacs-directory))
 (add-to-list 'load-path site-lisp-dir)
 (add-to-list 'load-path setup-dir)
+
+;; auto complete: auto code completion
+(setq auto-complete-dir (expand-file-name "auto-complete" user-emacs-directory))
+(add-to-list 'load-path auto-complete-dir)
+(require 'auto-complete-config)
+(ac-config-default)
 
 (require 'mode-mappings)
 (require 'key-bindings)
