@@ -52,6 +52,8 @@
 (add-to-list 'load-path auto-complete-dir)
 (require 'auto-complete-config)
 (ac-config-default)
+;; remove ac-comphist.dat file
+(setq ac-comphist-file "")
 
 ;; highlight parentheses
 (require 'highlight-parentheses)
