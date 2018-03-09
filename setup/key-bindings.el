@@ -6,8 +6,6 @@
 (require 'mark-more-like-this)
 (global-set-key (kbd "M-+") 'mark-previous-like-this)
 (global-set-key (kbd "M-=") 'mark-next-like-this)
-;; like the other two, but takes an argument (negative is previous)
-(global-set-key (kbd "C-M-m") 'mark-more-like-this) 
 (global-set-key (kbd "C-*") 'mark-all-like-this)
 
 ;; Use ace jump mode
@@ -23,7 +21,7 @@
 ;; Turn on the menu bar for exploring new modes
 (global-set-key (kbd "C-<f10>") 'menu-bar-mode)
 
-;; Camel to underscore : TestTest -> test_test
+;; Camel to underscore : TestTest <-> test_test
 (defun split-name (s)
   (split-string
    (let ((case-fold-search nil))

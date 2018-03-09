@@ -38,21 +38,6 @@ if you change this variable."
      ;; http://ergoemacs.org/emacs/organize_your_dot_emacs.html
      (add-hook 'after-save-hook 'byte-compile-current-buffer)))
 
-;; PHP
-(autoload 'php-mode "php-mode" t)
-(add-to-list 'auto-mode-alist '("\\.php[345]?" . php-mode))
-(eval-after-load "php-mode"
-  '(progn
-     ((lambda ()
-        (require 'multi-web-mode)
-        (define-key php-mode-map (kbd "C-c /") 'comment-or-uncomment-region)
-        (setq mweb-default-major-mode 'html-mode)
-        (setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
-                          (js-mode "<script +\\(type=\"text/javascript\"\\|language=\"javascript\"\\)[^>]*>" "</script>")
-                          (css-mode "<style +type=\"text/css\"[^>]*>" "</style>")))
-        (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
-        (multi-web-global-mode 1)))))
-
 ;; SGML
 (add-to-list 'auto-mode-alist '("\\.tpl.php[345]?" . sgml-mode))
 (eval-after-load "sgml-mode"
@@ -68,6 +53,21 @@ if you change this variable."
 	    (zencoding-mode 1)
 	    (define-key zencoding-mode-keymap (kbd "C-c C-j") 'zencoding-expand-line)))))))
 
+;; PHP
+(autoload 'php-mode "php-mode" t)
+(add-to-list 'auto-mode-alist '("\\.php[345]?" . php-mode))
+(eval-after-load "php-mode"
+  '(progn
+     ((lambda ()
+        (require 'multi-web-mode)
+        (define-key php-mode-map (kbd "C-c /") 'comment-or-uncomment-region)
+        (setq mweb-default-major-mode 'html-mode)
+        (setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
+                          (js-mode "<script\\( +type=\"text/javascript\"\\| *\\)[^>]*>" "</script>")
+                          (css-mode "<style\\( +type=\"text/css\"\\| *\\)[^>]*>" "</style>")))
+        (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
+        (multi-web-global-mode 1)))))
+
 ;; HTML
 (add-to-list 'auto-mode-alist '("\\.html" . sgml-mode))
 (eval-after-load "sgml-mode"
@@ -76,14 +76,37 @@ if you change this variable."
         (require 'multi-web-mode)
         (setq mweb-default-major-mode 'html-mode)
         (setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
-                          (js-mode "<script +\\(type=\"text/javascript\"\\|language=\"javascript\"\\)[^>]*>" "</script>")
-                          (css-mode "<style +type=\"text/css\"[^>]*>" "</style>")))
+                          (js-mode "<script\\( +type=\"text/javascript\"\\| *\\)[^>]*>" "</script>")
+                          (css-mode "<style\\( +type=\"text/css\"\\| *\\)[^>]*>" "</style>")))
         (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
         (multi-web-global-mode 1)))))
+
+;; CSS
+(eval-after-load "css-mode"
+  '(progn
+    (setq css-indent-offset 2)))
+
 
 ;; JAVASCRIPT
 (autoload 'js3-mode "js3" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js3-mode))
+(eval-after-load "js3-mode"
+  (progn
+    (setq js3-auto-indent-p t)
+    (setq js3-enter-indents-newline t) 
+    (setq js3-indent-on-enter-key t)))
+
+(eval-after-load "js-mode"
+  (progn
+    (setq js-indent-level 2)))
+  
+  
+;; COFFEESCRIPT
+(require 'coffee-mode)
+(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+(eval-after-load "coffee-mode"
+  '(progn
+     (setq coffee-tab-width 2)))
 
 ;; ORG
 (eval-after-load "org"
