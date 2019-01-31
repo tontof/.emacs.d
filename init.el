@@ -1,4 +1,11 @@
 ;; turn off mouse interface early in startup to avoid momentary display
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
   (when (fboundp mode) (funcall mode -1)))
 
@@ -12,6 +19,19 @@
 
 ;; disable local variables -*-
 (setq enable-local-variables nil)
+
+;; (global-linum-mode 1)
+;; (require 'linum)
+;; (defun linum-update-window-scale-fix (win)
+;;   "fix linum for scaled text"
+;;   (set-window-margins win
+;; 		      (ceiling (* (if (boundp 'text-scale-mode-step)
+;; 				      (expt text-scale-mode-step
+;; 					    text-scale-mode-amount) 1)
+;; 				  (if (car (window-margins))
+;; 				      (car (window-margins)) 1)
+;; 				  ))))
+;; (advice-add #'linum-update-window :after #'linum-update-window-scale-fix)
 
 (column-number-mode 1)             ;; show column number
 (defalias 'yes-or-no-p 'y-or-n-p)  ;; replace yes/no by y/n
@@ -73,3 +93,30 @@
 ;; custom mode + shortcuts
 (require 'mode-mappings)
 (require 'key-bindings)
+
+(setq org-src-fontify-natively t)
+
+(set-face-foreground 'font-lock-comment-face "light pink")
+
+(require 'projectile)
+
+(require 'neotree)
+
+(defun neotree-project-dir ()
+  "Open NeoTree using the git root."
+  (interactive)
+  (let ((project-dir (projectile-project-root))
+        (file-name (buffer-file-name)))
+    (neotree-toggle)
+    (if project-dir
+        (if (neo-global--window-exists-p)
+            (progn
+              (neotree-dir project-dir)
+              (neotree-find file-name)))
+      (message "Could not find git project root."))))
+(global-set-key [f8] 'neotree-project-dir)
+(setq neo-theme (if (display-graphic-p) 'arrow))
+(setq projectile-switch-project-action 'neotree-projectile-action)
+
+(global-set-key [C-mouse-4] 'text-scale-increase)
+(global-set-key [C-mouse-5] 'text-scale-decrease)

@@ -92,6 +92,7 @@ if you change this variable."
 (add-to-list 'auto-mode-alist '("\\.js$" . js3-mode))
 (eval-after-load "js3-mode"
   (progn
+    (add-to-list 'ac-modes 'js3-mode)
     (setq js3-auto-indent-p t)
     (setq js3-enter-indents-newline t) 
     (setq js3-indent-on-enter-key t)))

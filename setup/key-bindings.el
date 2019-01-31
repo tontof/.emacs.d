@@ -1,12 +1,12 @@
-;; Replace rectangle-text with inline-string-rectangle
-(require 'inline-string-rectangle)
-(global-set-key (kbd "C-x r t") 'inline-string-rectangle)
+;; Replace rectangle-text with multiple-cursors
+(require 'mc-edit-lines)
+(global-set-key (kbd "C-x r t") 'mc/edit-lines)
 
-;; Multiple mark with mark-more-like-this
-(require 'mark-more-like-this)
-(global-set-key (kbd "M-+") 'mark-previous-like-this)
-(global-set-key (kbd "M-=") 'mark-next-like-this)
-(global-set-key (kbd "C-*") 'mark-all-like-this)
+;; Multiple mark with multiple-cursors
+(require 'mc-mark-more)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 ;; Use ace jump mode
 (require 'ace-jump-mode)
