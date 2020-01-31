@@ -75,4 +75,16 @@
 
 (global-set-key (kbd "M-*") 'mark-current-word)
 
+(require 'projectile)
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+(setq neo-theme (if (display-graphic-p) 'arrow))
+(setq projectile-switch-project-action 'neotree-projectile-action)
+
+(global-set-key [C-mouse-4] 'text-scale-increase)
+(global-set-key [C-mouse-5] 'text-scale-decrease)
+
 (provide 'key-bindings)
+
+(add-hook 'prog-mode-hook #'hs-minor-mode)
+(global-set-key [C-tab] 'hs-toggle-hiding)

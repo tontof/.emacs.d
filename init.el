@@ -1,5 +1,4 @@
 ;; turn off mouse interface early in startup to avoid momentary display
-
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -98,25 +97,25 @@
 
 (set-face-foreground 'font-lock-comment-face "light pink")
 
-(require 'projectile)
+(require 'less-css-mode)
 
-(require 'neotree)
-
-(defun neotree-project-dir ()
-  "Open NeoTree using the git root."
+(defun window-split-toggle ()
+  "Toggle between horizontal and vertical split with two windows."
   (interactive)
-  (let ((project-dir (projectile-project-root))
-        (file-name (buffer-file-name)))
-    (neotree-toggle)
-    (if project-dir
-        (if (neo-global--window-exists-p)
-            (progn
-              (neotree-dir project-dir)
-              (neotree-find file-name)))
-      (message "Could not find git project root."))))
-(global-set-key [f8] 'neotree-project-dir)
-(setq neo-theme (if (display-graphic-p) 'arrow))
-(setq projectile-switch-project-action 'neotree-projectile-action)
+  (if (> (length (window-list)) 2)
+      (error "Can't toggle with more than 2 windows!")
+    (let ((func (if (window-full-height-p)
+                    #'split-window-vertically
+                  #'split-window-horizontally)))
+      (delete-other-windows)
+      (funcall func)
+      (save-selected-window
+        (other-window 1)
+        (switch-to-buffer (other-buffer))))))
 
-(global-set-key [C-mouse-4] 'text-scale-increase)
-(global-set-key [C-mouse-5] 'text-scale-decrease)
+
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((ditaa . t))) ; this line activates ditaa
+

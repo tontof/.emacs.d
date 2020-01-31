@@ -49,9 +49,8 @@ if you change this variable."
         (add-hook 'sgml-mode-hook
 	  (lambda ()
             (require 'yasnippet)
-	    (require 'zencoding-mode)
-	    (zencoding-mode 1)
-	    (define-key zencoding-mode-keymap (kbd "C-c C-j") 'zencoding-expand-line)))))))
+	    (require 'emmet-mode)
+	    (emmet-mode 1)))))))
 
 ;; PHP
 (autoload 'php-mode "php-mode" t)
