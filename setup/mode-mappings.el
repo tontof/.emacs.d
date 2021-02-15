@@ -1,7 +1,7 @@
 ;; LISP
 (eval-after-load "lisp-mode"
   '(progn
-;; http://www.opensource.apple.com/source/emacs/emacs-39/emacs/lisp/emacs-lisp/bytecomp.el
+     ;; http://www.opensource.apple.com/source/emacs/emacs-39/emacs/lisp/emacs-lisp/bytecomp.el
      (defcustom emacs-lisp-file-regexp (if (eq system-type 'vax-vms)
                                            "\\.EL\\(;[0-9]+\\)?$"
                                          "\\.el$")
@@ -79,11 +79,13 @@ if you change this variable."
                           (css-mode "<style\\( +type=\"text/css\"\\| *\\)[^>]*>" "</style>")))
         (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
         (multi-web-global-mode 1)))))
+;; Less
+(require 'less-css-mode)
 
 ;; CSS
 (eval-after-load "css-mode"
   '(progn
-    (setq css-indent-offset 2)))
+     (setq css-indent-offset 2)))
 
 
 ;; JAVASCRIPT
@@ -114,6 +116,17 @@ if you change this variable."
      ((lambda ()
         (require 'ox-reveal)
         (require 'htmlize)
-        (setq org-html-htmlize-output-type 'css)))))
+        (setq org-html-htmlize-output-type `nil)))))
+
+;; OCaml
+(add-to-list 'auto-mode-alist '("\\.ml[ip]?\\'" . (lambda ()
+                                                    ;; add major mode setting here, if needed, for example:
+                                                    (require 'tuareg)
+                                                    (tuareg-mode)
+                                                    )))
+
+;; Text mode
+(add-hook 'text-mode-hook 'auto-complete-mode)
 
 (provide 'mode-mappings)
+

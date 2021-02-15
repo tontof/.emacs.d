@@ -8,9 +8,10 @@
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
   (when (fboundp mode) (funcall mode -1)))
 
-(setq inhibit-startup-message t)   ;; remove start message
-(setq initial-scratch-message nil) ;; show nothing in *scratch* when started
-(setq visible-bell t)              ;; replace bell by blink
+(setq inhibit-startup-message t)          ;; remove start message
+(setq initial-scratch-message nil)        ;; show nothing in *scratch* when started
+(setq visible-bell t)                     ;; replace bell by blink
+(setq-default frame-title-format '("%b")) ;; add buffer file name to emacs window
 
 ;; disable version control and magic mode
 (setq vc-handled-backends nil)
@@ -89,15 +90,7 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'dracula t)
 
-;; custom mode + shortcuts
-(require 'mode-mappings)
-(require 'key-bindings)
-
-(setq org-src-fontify-natively t)
-
 (set-face-foreground 'font-lock-comment-face "light pink")
-
-(require 'less-css-mode)
 
 (defun window-split-toggle ()
   "Toggle between horizontal and vertical split with two windows."
@@ -113,9 +106,7 @@
         (other-window 1)
         (switch-to-buffer (other-buffer))))))
 
-
-
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((ditaa . t))) ; this line activates ditaa
+;; custom mode + shortcuts
+(require 'mode-mappings)
+(require 'key-bindings)
 

@@ -18,9 +18,6 @@
 (global-set-key (kbd "<M-up>") 'windmove-up)
 (global-set-key (kbd "<M-down>") 'windmove-down)
 
-;; Turn on the menu bar for exploring new modes
-(global-set-key (kbd "C-<f10>") 'menu-bar-mode)
-
 ;; Camel to underscore : TestTest <-> test_test
 (defun split-name (s)
   (split-string
