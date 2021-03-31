@@ -57,10 +57,6 @@
 (setq c-default-style "bsd"
       c-basic-offset 4)
 
-;; set background colors
-(set-background-color "black")
-(set-foreground-color "white")
-
 ;; set/load some paths 
 (setq site-lisp-dir (expand-file-name "site-lisp" user-emacs-directory))
 (setq setup-dir (expand-file-name "setup" user-emacs-directory))
@@ -90,9 +86,6 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'dracula t)
 
-(set-face-foreground 'font-lock-comment-face "light pink")
-
 ;; custom mode + shortcuts
 (require 'mode-mappings)
 (require 'key-bindings)
-
