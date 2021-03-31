@@ -116,6 +116,10 @@ if you change this variable."
      ((lambda ()
         (require 'ox-reveal)
         (require 'htmlize)
+        (setq org-ditaa-jar-path "~/.emacs.d/ditaa/ditaa.jar")
+        (org-babel-do-load-languages
+         'org-babel-load-languages
+         '((ditaa . t))) ; this line activates ditaa
         (setq org-html-htmlize-output-type `nil)))))
 
 ;; OCaml
@@ -124,6 +128,13 @@ if you change this variable."
                                                     (require 'tuareg)
                                                     (tuareg-mode)
                                                     )))
+
+;; Rust
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . (lambda ()
+                                               ;; add major mode setting here, if needed, for example:
+                                               (require 'rust-mode)
+                                               (rust-mode)
+                                               )))
 
 ;; Text mode
 (add-hook 'text-mode-hook 'auto-complete-mode)

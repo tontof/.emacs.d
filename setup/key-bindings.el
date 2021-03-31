@@ -81,7 +81,69 @@
 (global-set-key [C-mouse-4] 'text-scale-increase)
 (global-set-key [C-mouse-5] 'text-scale-decrease)
 
-(provide 'key-bindings)
-
 (add-hook 'prog-mode-hook #'hs-minor-mode)
 (global-set-key [C-tab] 'hs-toggle-hiding)
+
+(global-set-key (kbd "C-c ;") 'comment-or-uncomment-region)
+
+(defun window-split-toggle ()
+  "Toggle between horizontal and vertical split with two windows."
+  (interactive)
+  (if (> (length (window-list)) 2)
+      (error "Can't toggle with more than 2 windows!")
+    (let ((func (if (window-full-height-p)
+                    #'split-window-vertically
+                  #'split-window-horizontally)))
+      (delete-other-windows)
+      (funcall func)
+      (save-selected-window
+        (other-window 1)
+        (switch-to-buffer (other-buffer))))))
+
+(global-set-key (kbd "C-x /") 'window-split-toggle)
+
+;; Inspired by https://stackoverflow.com/questions/7362625/
+(defun print-to-pdf-with-lines ()
+  "Print the current buffer to pdf with number lines"
+  (interactive)
+  (print-to-pdf t))
+
+(defun print-to-pdf (&optional with-lines)
+  "Print the current buffer to pdf"
+  (interactive)
+  (let ((wbuf (generate-new-buffer (concat (format-time-string "%Y-%m-%d") ":" (buffer-name (current-buffer)))))
+        (sbuf (current-buffer)))
+    (jit-lock-fontify-now)
+    (load-theme 'print t)
+    (save-current-buffer
+      (set-buffer wbuf)
+      (insert-buffer sbuf)
+      (visual-line-mode t)
+      ;; Customize header/footer ps https://www.emacswiki.org/emacs/PsPrintPackage-23
+      (setq ps-print-header t
+            ps-print-header-frame t
+            ps-header-lines 1
+            ps-left-header (list (lambda () (buffer-name sbuf)))
+            ps-right-header (list (lambda () (format-time-string "%Y-%m-%d")))
+            ps-print-footer t
+            ps-print-footer-frame nil
+            ps-footer-lines 1
+            ps-right-footer nil
+            ps-left-footer (list (concat "{pagenumberstring dup stringwidth pop"
+                                         " 2 div PrintWidth 2 div exch sub 0 rmoveto}")))
+      (if with-lines (rectangle-number-lines (region-beginning) (region-end) 1))
+      (ps-spool-buffer-with-faces)
+      (kill-buffer wbuf)
+      (switch-to-buffer "*PostScript*")
+      (write-file (concat (buffer-name sbuf) ".ps"))
+      (kill-buffer (current-buffer)))
+    (load-theme 'dracula t)
+    (call-process "ps2pdf" nil nil nil
+                  (concat (buffer-name sbuf) ".ps") (concat (buffer-name sbuf) ".pdf"))
+    (delete-file (concat (buffer-name sbuf) ".ps"))
+    (message (concat "PDF saved to " (concat (buffer-name sbuf) ".pdf")))))
+
+(global-set-key (kbd "C-c p p") 'print-to-pdf)
+(global-set-key (kbd "C-c p n") 'print-to-pdf-with-lines)
+
+(provide 'key-bindings)
