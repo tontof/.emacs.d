@@ -45,6 +45,9 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
+;; remove temporary lock file .#filename
+(setq create-lockfiles nil)
+
 ;; set utf-8 coding
 (setq locale-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
@@ -89,3 +92,5 @@
 ;; custom mode + shortcuts
 (require 'mode-mappings)
 (require 'key-bindings)
+
+;;(require 'web-mode)

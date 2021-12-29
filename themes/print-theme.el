@@ -17,7 +17,6 @@
 (require 'cl-lib)
 (deftheme print)
 
-
 ;;;; Configuration options:
 
 (defgroup print nil
@@ -73,13 +72,12 @@ There is a lot of discussion behind the 256 colors theme (see URL
 `https://github.com/dracula/emacs/pull/57').  Please take time to
 read it before opening a new issue about your will.")
 
-
 ;;;; Theme definition:
 
 ;; Assigment form: VARIABLE COLOR [256-COLOR [TTY-COLOR]]
 (let ((colors '(;; Upstream theme color
-                (dracula-bg      "#282a36" "unspecified-bg" "unspecified-bg") ; official background
-                (dracula-fg      "#060605" "#ffffff" "brightwhite") ; official foreground
+                (dracula-bg      "#282a36" "#282a36" "unspecified-bg") ; official background
+                (dracula-fg      "#060606" "#060606" "brightwhite") ; official foreground
                 (dracula-current "#44475a" "#303030" "brightblack") ; official current-line/selection
                 (dracula-comment "#6272a4" "#5f5faf" "blue")        ; official comment
                 (dracula-cyan    "#3f6972" "#87d7ff" "brightcyan")  ; official cyan

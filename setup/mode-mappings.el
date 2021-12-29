@@ -58,27 +58,29 @@ if you change this variable."
 (eval-after-load "php-mode"
   '(progn
      ((lambda ()
-        (require 'multi-web-mode)
+        ;;(require 'multi-web-mode)
         (define-key php-mode-map (kbd "C-c /") 'comment-or-uncomment-region)
         (setq mweb-default-major-mode 'html-mode)
         (setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
                           (js-mode "<script\\( +type=\"text/javascript\"\\| *\\)[^>]*>" "</script>")
                           (css-mode "<style\\( +type=\"text/css\"\\| *\\)[^>]*>" "</style>")))
         (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
-        (multi-web-global-mode 1)))))
+        ;;(multi-web-global-mode 1)
+        ))))
 
 ;; HTML
 (add-to-list 'auto-mode-alist '("\\.html" . sgml-mode))
 (eval-after-load "sgml-mode"
   '(progn
      ((lambda ()
-        (require 'multi-web-mode)
+        ;;(require 'multi-web-mode)
         (setq mweb-default-major-mode 'html-mode)
         (setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
                           (js-mode "<script\\( +type=\"text/javascript\"\\| *\\)[^>]*>" "</script>")
                           (css-mode "<style\\( +type=\"text/css\"\\| *\\)[^>]*>" "</style>")))
         (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
-        (multi-web-global-mode 1)))))
+        ;;(multi-web-global-mode 1)
+        ))))
 ;; Less
 (require 'less-css-mode)
 

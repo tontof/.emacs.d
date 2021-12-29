@@ -78,8 +78,12 @@
 (setq neo-theme (if (display-graphic-p) 'arrow))
 (setq projectile-switch-project-action 'neotree-projectile-action)
 
-(global-set-key [C-mouse-4] 'text-scale-increase)
-(global-set-key [C-mouse-5] 'text-scale-decrease)
+(require 'zoom-frm)
+(global-set-key [C-mouse-4] 'zoom-in)
+(global-set-key [C-mouse-5] 'zoom-out)
+(global-set-key (kbd "C-+") 'zoom-in)
+(global-set-key (kbd "C--") 'zoom-out)
+(global-set-key (kbd "C-0") 'zoom-frm-unzoom)
 
 (add-hook 'prog-mode-hook #'hs-minor-mode)
 (global-set-key [C-tab] 'hs-toggle-hiding)
@@ -113,7 +117,7 @@
   (interactive)
   (let ((wbuf (generate-new-buffer (concat (format-time-string "%Y-%m-%d") ":" (buffer-name (current-buffer)))))
         (sbuf (current-buffer)))
-    (jit-lock-fontify-now)
+    ;; (jit-lock-fontify-now)
     (load-theme 'print t)
     (save-current-buffer
       (set-buffer wbuf)
@@ -129,14 +133,17 @@
             ps-print-footer-frame nil
             ps-footer-lines 1
             ps-right-footer nil
-            ps-left-footer (list (concat "{pagenumberstring dup stringwidth pop"
-                                         " 2 div PrintWidth 2 div exch sub 0 rmoveto}")))
-      (if with-lines (rectangle-number-lines (region-beginning) (region-end) 1))
+            ps-left-footer (list (concat "{pagenumberstring dup stringwidth pop"                                         " 2 div PrintWidth 2 div exch sub 0 rmoveto}"))
+            ;;ps-number-of-columns 2
+            ps-line-number (if with-lines t nil)
+            )
+      ;; (if with-lines (rectangle-number-lines (region-beginning) (region-end) 1))
       (ps-spool-buffer-with-faces)
       (kill-buffer wbuf)
       (switch-to-buffer "*PostScript*")
       (write-file (concat (buffer-name sbuf) ".ps"))
-      (kill-buffer (current-buffer)))
+      ;;(kill-buffer (current-buffer))
+      )
     (load-theme 'dracula t)
     (call-process "ps2pdf" nil nil nil
                   (concat (buffer-name sbuf) ".ps") (concat (buffer-name sbuf) ".pdf"))
