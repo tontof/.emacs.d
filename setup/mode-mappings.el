@@ -69,8 +69,8 @@ if you change this variable."
         ))))
 
 ;; HTML
-(add-to-list 'auto-mode-alist '("\\.html" . sgml-mode))
-(eval-after-load "sgml-mode"
+(add-to-list 'auto-mode-alist '("\\.html" . html-mode))
+(eval-after-load "html-mode"
   '(progn
      ((lambda ()
         ;;(require 'multi-web-mode)
