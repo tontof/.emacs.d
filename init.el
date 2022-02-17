@@ -92,5 +92,3 @@
 ;; custom mode + shortcuts
 (require 'mode-mappings)
 (require 'key-bindings)
-
-;;(require 'web-mode)

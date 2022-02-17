@@ -38,49 +38,35 @@ if you change this variable."
      ;; http://ergoemacs.org/emacs/organize_your_dot_emacs.html
      (add-hook 'after-save-hook 'byte-compile-current-buffer)))
 
-;; SGML
-(add-to-list 'auto-mode-alist '("\\.tpl.php[345]?" . sgml-mode))
-(eval-after-load "sgml-mode"
-  '(progn
-     ((lambda ()
-        (require 'rename-sgml-tag)
-        (define-key sgml-mode-map (kbd "C-c C-e") 'sgml-close-tag)
-        (define-key sgml-mode-map (kbd "C-c C-r") 'rename-sgml-tag)
-        (add-hook 'sgml-mode-hook
-	  (lambda ()
-            (require 'yasnippet)
-	    (require 'emmet-mode)
-	    (emmet-mode 1)))))))
-
 ;; PHP
 (autoload 'php-mode "php-mode" t)
 (add-to-list 'auto-mode-alist '("\\.php[345]?" . php-mode))
 (eval-after-load "php-mode"
   '(progn
      ((lambda ()
-        ;;(require 'multi-web-mode)
+        (require 'multi-web-mode)
         (define-key php-mode-map (kbd "C-c /") 'comment-or-uncomment-region)
         (setq mweb-default-major-mode 'html-mode)
         (setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
-                          (js-mode "<script\\( +type=\"text/javascript\"\\| *\\)[^>]*>" "</script>")
-                          (css-mode "<style\\( +type=\"text/css\"\\| *\\)[^>]*>" "</style>")))
-        (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
-        ;;(multi-web-global-mode 1)
+                          (js-mode "<script[^>]*>" "</script>")
+                          (css-mode "<style[^>]*>" "</style>")))
+        (setq mweb-filename-extensions '("php" "php3" "php4" "php5"))
+        (multi-web-global-mode 1)
         ))))
 
 ;; HTML
-(add-to-list 'auto-mode-alist '("\\.html" . html-mode))
-(eval-after-load "html-mode"
+(add-to-list 'auto-mode-alist '("\\.html" . mhtml-mode))
+(eval-after-load "mhtml-mode"
   '(progn
      ((lambda ()
-        ;;(require 'multi-web-mode)
-        (setq mweb-default-major-mode 'html-mode)
-        (setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
-                          (js-mode "<script\\( +type=\"text/javascript\"\\| *\\)[^>]*>" "</script>")
-                          (css-mode "<style\\( +type=\"text/css\"\\| *\\)[^>]*>" "</style>")))
-        (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
-        ;;(multi-web-global-mode 1)
+        (require 'yasnippet)
+        (require 'emmet-mode)
+        (add-hook 'html-mode-hook
+                  (lambda ()
+                    (emmet-mode 1)
+                    ))
         ))))
+
 ;; Less
 (require 'less-css-mode)
 
@@ -94,14 +80,14 @@ if you change this variable."
 (autoload 'js3-mode "js3" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js3-mode))
 (eval-after-load "js3-mode"
-  (progn
+  '(progn
     (add-to-list 'ac-modes 'js3-mode)
     (setq js3-auto-indent-p t)
     (setq js3-enter-indents-newline t) 
     (setq js3-indent-on-enter-key t)))
 
 (eval-after-load "js-mode"
-  (progn
+  '(progn
     (setq js-indent-level 2)))
   
   
