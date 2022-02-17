@@ -72,11 +72,8 @@
 
 (global-set-key (kbd "M-*") 'mark-current-word)
 
-(require 'projectile)
-(require 'neotree)
-(global-set-key [f8] 'neotree-toggle)
-(setq neo-theme (if (display-graphic-p) 'arrow))
-(setq projectile-switch-project-action 'neotree-projectile-action)
+(require 'dired-sidebar)
+(global-set-key [f8] 'dired-sidebar-toggle-sidebar)
 
 (require 'zoom-frm)
 (global-set-key [C-mouse-4] 'zoom-in)
