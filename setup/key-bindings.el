@@ -74,6 +74,25 @@
 
 (require 'dired-sidebar)
 (global-set-key [f8] 'dired-sidebar-toggle-sidebar)
+;; list all file except . directory and dotfile but .. and directory first
+(setq dired-custom-ls "-al --ignore=\. --ignore=\.[^\.]* --group-directories-first")
+;; list all file except . directory and directory first
+(setq dired-custom-ls-dotfile "-al --ignore=. --group-directories-first")
+(setq dired-custom-switch 1)
+
+(setq dired-listing-switches dired-custom-ls)
+(setq dired-sidebar-theme 'nerd)
+
+(add-hook 'dired-mode-hook
+          (lambda ()
+            (define-key dired-mode-map (kbd "M-o")
+              (lambda ()
+                "Toggle between hide and show."
+                (interactive)
+                (setq dired-custom-switch (- dired-custom-switch))
+                (if (= dired-custom-switch 1)
+                    (dired-sort-other dired-custom-ls)
+                  (dired-sort-other dired-custom-ls-dotfile))))))
 
 (require 'zoom-frm)
 (global-set-key [C-mouse-4] 'zoom-in)
