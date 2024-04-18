@@ -1,3 +1,4 @@
+
 ;; LISP
 (eval-after-load "lisp-mode"
   '(progn
@@ -39,19 +40,13 @@ if you change this variable."
      (add-hook 'after-save-hook 'byte-compile-current-buffer)))
 
 ;; PHP
-(autoload 'php-mode "php-mode" t)
-(add-to-list 'auto-mode-alist '("\\.php[345]?" . php-mode))
-(eval-after-load "php-mode"
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
+(eval-after-load "web-mode"
   '(progn
      ((lambda ()
-        (require 'multi-web-mode)
-        (define-key php-mode-map (kbd "C-c /") 'comment-or-uncomment-region)
-        (setq mweb-default-major-mode 'html-mode)
-        (setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
-                          (js-mode "<script[^>]*>" "</script>")
-                          (css-mode "<style[^>]*>" "</style>")))
-        (setq mweb-filename-extensions '("php" "php3" "php4" "php5"))
-        (multi-web-global-mode 1)
+        (require 'emmet-mode)
+        (add-hook 'web-mode-hook  'emmet-mode)
         ))))
 
 ;; HTML

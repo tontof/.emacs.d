@@ -5,13 +5,15 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
-(dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
+;; (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
+(dolist (mode '(scroll-bar-mode))
   (when (fboundp mode) (funcall mode -1)))
 
 (setq inhibit-startup-message t)          ;; remove start message
 (setq initial-scratch-message nil)        ;; show nothing in *scratch* when started
 (setq visible-bell t)                     ;; replace bell by blink
 (setq-default frame-title-format '("%b")) ;; add buffer file name to emacs window
+(setq backup-by-copying-when-linked  t)   ;; prevent breaking hard link
 
 ;; disable version control and magic mode
 (setq vc-handled-backends nil)
